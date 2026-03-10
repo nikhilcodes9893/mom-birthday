@@ -1,40 +1,56 @@
-```html
+```html id="b9t6x2"
 <!DOCTYPE html>
 <html>
 <head>
-<title>Happy Birthday Mom</title>
+<meta charset="UTF-8">
+<title>Happy Birthday Seema</title>
 
 <style>
 
-body{
+html,body{
 margin:0;
+height:100%;
+width:100%;
 overflow:hidden;
-font-family:Arial;
-background:linear-gradient(135deg,#ff758c,#ff7eb3);
+font-family:Arial, sans-serif;
+display:flex;
+justify-content:center;
+align-items:center;
 text-align:center;
 color:white;
+
+/* Background image */
+background-image:url("https://images.unsplash.com/photo-1492684223066-81342ee5ff30");
+background-size:cover;
+background-position:center;
+}
+
+.container{
+width:90%;
+max-width:1700px;
+backdrop-filter:blur(4px);
 }
 
 h1{
-margin-top:70px;
-font-size:60px;
-animation: glow 2s infinite alternate;
+font-size:clamp(80px,8vw,160px);
+letter-spacing:6px;
+animation:glow 2s infinite alternate;
 }
 
 @keyframes glow{
-from{ text-shadow:0 0 10px white;}
-to{ text-shadow:0 0 30px yellow;}
+from{ text-shadow:0 0 20px white;}
+to{ text-shadow:0 0 70px yellow;}
 }
 
 h2{
-font-size:35px;
+font-size:clamp(40px,4vw,80px);
+margin-bottom:30px;
 }
 
 #cake{
-font-size:150px;
+font-size:clamp(220px,15vw,360px);
 cursor:pointer;
-margin-top:40px;
-transition:transform 0.3s;
+transition:transform .3s;
 }
 
 #cake:hover{
@@ -42,45 +58,54 @@ transform:scale(1.1);
 }
 
 .message{
-font-size:24px;
-width:60%;
-margin:auto;
-margin-top:20px;
+font-size:clamp(28px,2vw,50px);
+margin-top:25px;
 }
+
+/* Balloons */
+
+.balloon{
+position:absolute;
+bottom:-120px;
+font-size:90px;
+animation:rise linear infinite;
+}
+
+@keyframes rise{
+0%{transform:translateY(0);}
+100%{transform:translateY(-130vh);}
+}
+
+/* Hearts */
 
 .heart{
 position:absolute;
-font-size:25px;
+font-size:40px;
 animation:float 6s linear infinite;
 }
 
 @keyframes float{
-0%{transform:translateY(100vh); opacity:1;}
-100%{transform:translateY(-10vh); opacity:0;}
+0%{transform:translateY(100vh);opacity:1;}
+100%{transform:translateY(-10vh);opacity:0;}
 }
+
+/* Fireworks */
 
 .firework{
 position:absolute;
-width:8px;
-height:8px;
-background:yellow;
+width:12px;
+height:12px;
+background:white;
 border-radius:50%;
-animation:explode 1.2s ease-out forwards;
+animation:explode 1.6s ease-out forwards;
 }
 
 @keyframes explode{
 0%{transform:scale(1);}
-100%{transform:scale(20); opacity:0;}
-}
-
-#gift{
-font-size:70px;
-margin-top:20px;
-cursor:pointer;
+100%{transform:scale(35);opacity:0;}
 }
 
 </style>
-
 </head>
 
 <body>
@@ -89,51 +114,75 @@ cursor:pointer;
 <source src="song.mp3" type="audio/mpeg">
 </audio>
 
-<h1>🎉 Happy Birthday Mom 🎉</h1>
+<div class="container">
 
-<h2>Dear Seema ❤️</h2>
+<h1>🎉 HAPPY BIRTHDAY 🎉</h1>
+<h2>SEEMA ❤️</h2>
 
 <div id="cake">🎂</div>
 
-<div id="gift">🎁</div>
-
 <p class="message" id="msg">
-Click anywhere or the cake to start the celebration!
+Click anywhere to start the celebration!
 </p>
+
+</div>
 
 <script>
 
 const cake=document.getElementById("cake");
-const gift=document.getElementById("gift");
 const msg=document.getElementById("msg");
 const music=document.getElementById("music");
 
-/* Start music on first click anywhere */
-document.body.addEventListener("click", function(){
+/* Strong music start for any interaction */
+
+function startMusic(){
 music.play().catch(()=>{});
-},{once:true});
+}
+
+document.body.addEventListener("click",startMusic,{once:true});
+document.body.addEventListener("touchstart",startMusic,{once:true});
+document.body.addEventListener("keydown",startMusic,{once:true});
+
+/* Cake interaction */
 
 cake.onclick=function(){
 
-music.play().catch(()=>{});
+startMusic();
 
 cake.innerHTML="🍰";
 
-msg.innerHTML="Happy Birthday Mom ❤️ Thank you for everything you do for me.";
+msg.innerHTML="Happy Birthday Seema ❤️ May your day be filled with love, joy and happiness!";
 
-for(let i=0;i<40;i++){
+for(let i=0;i<70;i++){
 createHeart();
 }
 
-for(let i=0;i<30;i++){
+for(let i=0;i<50;i++){
 createFirework();
 }
 
 };
 
-gift.onclick=function(){
-alert("Surprise! 🎂 Love you Mom ❤️");
-};
+/* Balloons */
+
+function createBalloon(){
+
+let balloon=document.createElement("div");
+balloon.className="balloon";
+balloon.innerHTML="🎈";
+
+balloon.style.left=Math.random()*100+"vw";
+balloon.style.animationDuration=(7+Math.random()*6)+"s";
+
+document.body.appendChild(balloon);
+
+setTimeout(()=>balloon.remove(),13000);
+
+}
+
+setInterval(createBalloon,700);
+
+/* Hearts */
 
 function createHeart(){
 
@@ -142,7 +191,7 @@ heart.className="heart";
 heart.innerHTML="💖";
 
 heart.style.left=Math.random()*100+"vw";
-heart.style.fontSize=(20+Math.random()*40)+"px";
+heart.style.fontSize=(30+Math.random()*60)+"px";
 
 document.body.appendChild(heart);
 
@@ -150,21 +199,21 @@ setTimeout(()=>heart.remove(),6000);
 
 }
 
+/* Fireworks */
+
 function createFirework(){
 
 let fire=document.createElement("div");
 fire.className="firework";
 
 fire.style.left=Math.random()*100+"vw";
-fire.style.top=Math.random()*60+"vh";
+fire.style.top=Math.random()*80+"vh";
 
 document.body.appendChild(fire);
 
-setTimeout(()=>fire.remove(),1200);
+setTimeout(()=>fire.remove(),1600);
 
 }
-
-setInterval(createHeart,1000);
 
 </script>
 
